@@ -1,4 +1,4 @@
-package com.example.vpn;
+package com.example.Proxy;
 
 import org.junit.Test;
 
