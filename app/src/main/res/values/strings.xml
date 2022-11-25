@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Proksi</string>
-    <string name="button1">connect</string>
     <string name="ip">ip</string>
-    <string name="logo">zachet</string>
-    <string name="ip_address">192.168.1.2</string>
-    <string name="connection">connection</string>
-    <string name="connect">CONNECT</string>
-    <string name="disconnect">DISCONNECT</string>
+    <string name="logo">logo</string>
+    <string name="ip_address">127.0.0.1</string>
+    <string name="network_port">8080</string>
+    <string name="server">server</string>
+    <string name="start">START</string>
+    <string name="stop">STOP</string>
 </resources>

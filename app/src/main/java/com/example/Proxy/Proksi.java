@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.*;
 
 import org.littleshoot.proxy.*;
 import org.littleshoot.proxy.impl.*;
@@ -16,6 +17,7 @@ import io.netty.handler.codec.http.*;
 public class Proksi extends Activity{
 
     HttpProxyServer server;
+    ToggleButton serverBtn;
     private final String answer = "";
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -23,7 +25,16 @@ public class Proksi extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startServer();
+        serverBtn = (ToggleButton) findViewById(R.id.toggleButton);
+        serverBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+            {
+                if (isChecked)
+                    startServer();
+                else
+                    server.stop();
+            }
+        });
     }
     @Override
     public void onDestroy()
