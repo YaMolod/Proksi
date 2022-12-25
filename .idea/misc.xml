@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Proksi/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Proksi/app/src/main/res/drawable/connection_button.xml" value="0.173" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Proksi/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/admin/AndroidStudioProjects/Proksi/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/skyst/AndroidStudioProjects/Proxy/app/src/main/res/drawable/connection_button.xml" value="0.1495" />
         <entry key="..\:/Users/skyst/AndroidStudioProjects/Proxy/app/src/main/res/layout/activity_main.xml" value="0.13958333333333334" />
         <entry key="..\:/Users/skyst/AndroidStudioProjects/VPN/app/src/main/res/layout/activity_main.xml" value="0.264" />
