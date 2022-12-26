@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.*;
 
+
 import org.littleshoot.proxy.*;
 import org.littleshoot.proxy.impl.*;
 
@@ -18,6 +19,8 @@ public class Proksi extends Activity{
 
     HttpProxyServer server;
     ToggleButton serverBtn;
+    EditText editIP;
+    EditText editPort;
     private final String answer = "";
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -25,12 +28,15 @@ public class Proksi extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        editIP = findViewById(R.id.editTextTextPersonName);
+        editPort = findViewById(R.id.editTextTextPersonName2);
+
         serverBtn = (ToggleButton) findViewById(R.id.toggleButton);
         serverBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if (isChecked)
-                    startServer();
+                    startServer(editIP.getText().toString(),Integer.parseInt(editPort.getText().toString()));
                 else
                     server.stop();
             }
@@ -43,9 +49,9 @@ public class Proksi extends Activity{
         super.onDestroy();
     }
 
-    public void startServer()
+    public void startServer(String ip,int port)
     {
-        InetSocketAddress socket = new InetSocketAddress("127.0.0.1",8080);
+        InetSocketAddress socket = new InetSocketAddress(ip,port);
         server =
                 DefaultHttpProxyServer.bootstrap()
                         .withAllowRequestToOriginServer(false)
