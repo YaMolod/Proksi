@@ -1,12 +1,10 @@
 package com.example.Proxy;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.*;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 
 import org.littleshoot.proxy.*;
@@ -23,12 +21,12 @@ public class Proksi extends Activity{
     ToggleButton serverBtn;
     EditText editIP;
     EditText editPort;
-    private final String answer = "";
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         editIP = findViewById(R.id.editTextTextPersonName);
         editPort = findViewById(R.id.editTextTextPersonName2);
@@ -39,7 +37,7 @@ public class Proksi extends Activity{
             {
                 if (isChecked)
                     startServer(editIP.getText().toString(),Integer.parseInt(editPort.getText().toString()));
-                else
+                else if (server != null)
                     server.stop();
             }
         });
@@ -51,12 +49,13 @@ public class Proksi extends Activity{
         super.onDestroy();
     }
 
-    public void startServer(String ip,int port)
+    public int startServer(String ip,int port)
     {
+        InetSocketAddress socket = null;
+        HttpProxyServerBootstrap bootstrap = null;
         try {
-            InetSocketAddress socket = new InetSocketAddress(ip, port);
-
-            server =
+            socket = new InetSocketAddress(ip, port);
+            bootstrap =
                     DefaultHttpProxyServer.bootstrap()
                             .withAllowRequestToOriginServer(false)
                             .withAllowLocalOnly(false)
@@ -72,26 +71,22 @@ public class Proksi extends Activity{
 
                                         @Override
                                         public void proxyToServerRequestSending() {
-                                            // TODO: implement your filtering here
                                             Log.d("Log", "proxyToServerRequestSending:");
                                         }
 
                                         @Override
                                         public void proxyToServerRequestSent() {
-                                            // TODO: implement your filtering here
                                             Log.d("Log", "proxyToServerRequestSent:");
                                         }
 
                                         @Override
                                         public HttpObject serverToProxyResponse(HttpObject httpObject) {
-                                            // TODO: implement your filtering here
                                             Log.d("Log", "serverToProxy:" + httpObject.toString());
                                             return httpObject;
                                         }
 
                                         @Override
                                         public void serverToProxyResponseReceiving() {
-                                            // TODO: implement your filtering here
                                             Log.d("Log", "serverToProxyResponseReceiving:");
                                         }
 
@@ -103,19 +98,16 @@ public class Proksi extends Activity{
 
                                         @Override
                                         public void serverToProxyResponseReceived() {
-                                            // TODO: implement your filtering here
                                             Log.d("Log", "serverToProxyResponseReceiving:");
                                         }
 
                                         @Override
                                         public void serverToProxyResponseTimedOut() {
-                                            // TODO: implement your filtering here
                                             Log.d("Log", "serverToProxyResponseTimedOut:");
                                         }
 
                                         @Override
                                         public HttpResponse proxyToServerRequest(HttpObject httpObject) {
-                                            // TODO: implement your filtering here
                                             Log.d("Log", "proxyToServer:" + httpObject.toString());
                                             return null;
                                         }
@@ -142,13 +134,12 @@ public class Proksi extends Activity{
                                         }
 
                                         public void proxyToServerConnectionSucceeded(ChannelHandlerContext serverCtx) {
-                                            // TODO: implement your filtering here
                                             Log.d("Log", "ConnectionSucceeded:" + serverCtx.toString());
                                         }
                                     };
                                 }
-                            })
-                            .start();
+                            });
+            server = bootstrap.start();
         }
         catch (RuntimeException e)
         {
@@ -156,24 +147,17 @@ public class Proksi extends Activity{
             builder.setTitle("Ошибка");
             builder.setMessage("Проверьте данные!");
             builder.setCancelable(true);
-            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() { // Кнопка ОК
+            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss(); // Отпускает диалоговое окно
+                    dialog.dismiss();
+                    serverBtn.setChecked(false);
                 }
             });
             AlertDialog dialog = builder.create();
+            dialog.show();
+            return -1;
         }
-
-
-        finally {
-
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int request, int result, Intent data)
-    {
-
+        return 1;
     }
 }
